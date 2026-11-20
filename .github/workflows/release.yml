@@ -4,15 +4,26 @@ name: Release
 on:
   push:
     tags: ["v*.*.*"]
+  # Manual run from the Actions tab: (re)build and attach files to an existing tag
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release, e.g. v0.1.0"
+        required: true
 
 permissions:
   contents: write
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TAG }}
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -22,8 +33,8 @@ jobs:
       - name: Check tag matches package.json version
         run: |
           pkg="v$(node -p "require('./package.json').version")"
-          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $pkg"
+          if [ "$pkg" != "$TAG" ]; then
+            echo "::error::Tag $TAG does not match package.json version $pkg"
             exit 1
           fi
 
@@ -33,13 +44,20 @@ jobs:
         run: |
           mkdir -p release
           cp dist/neoless.css dist/neoless.min.css release/
-          zip -r "release/neoless-css-${GITHUB_REF_NAME}.zip" dist css README.md
+          zip -r "release/neoless-css-${TAG}.zip" dist css README.md
 
-      - name: Create GitHub release
+      # Works both for a pushed tag and for a release drafted/published on
+      # github.com (which creates the tag and triggers this run): if the
+      # release already exists, the built files are attached to it instead.
+      - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" release/* \
-            --title "$GITHUB_REF_NAME" \
-            --generate-notes \
-            --verify-tag
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" release/* --clobber
+          else
+            gh release create "$TAG" release/* \
+              --title "$TAG" \
+              --generate-notes \
+              --verify-tag
+          fi
