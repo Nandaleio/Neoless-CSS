@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neoless CSS Playground</title>
+
+  <!-- Source files (no build needed). For the built bundle use dist/neoless.min.css -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="#" aria-label="Home">Neoless CSS</a>
+      <ul>
+        <li><a href="#typography">Typography</a></li>
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#forms">Forms</a></li>
+        <li><a href="#components">Components</a></li>
+      </ul>
+      <button type="button" class="neutral" id="theme-toggle" aria-label="Toggle dark mode">◐ Theme</button>
+    </nav>
+  </header>
+
+  <main>
+    <header>
+      <p>DESIGN SYSTEM / PLAYGROUND</p>
+      <h1>Neoless CSS Showcase</h1>
+      <p>
+        A comprehensive sample page for testing typography,
+        components, layouts, and HTML element styling.
+      </p>
+      <p>
+        <a href="#components">Explore components</a>
+        <a href="#forms">View form elements</a>
+      </p>
+    </header>
+
+    <hr>
+
+    <!-- TYPOGRAPHY -->
+    <section id="typography">
+      <h2>Typography</h2>
+
+      <h1>Heading level 1</h1>
+      <h2>Heading level 2</h2>
+      <h3>Heading level 3</h3>
+      <h4>Heading level 4</h4>
+      <h5>Heading level 5</h5>
+      <h6>Heading level 6</h6>
+
+      <p>
+        This is a paragraph of regular text. It includes
+        <strong>strong text</strong>,
+        <b>bold text</b>,
+        <em>emphasized text</em>,
+        <i>italic text</i>,
+        <u>underlined text</u>,
+        <s>strikethrough text</s>,
+        <mark>highlighted text</mark>,
+        <small>small text</small>,
+        <sub>subscript</sub>,
+        and <sup>superscript</sup>.
+      </p>
+
+      <p>
+        Here is a <a href="#typography">standard hyperlink</a>,
+        a <abbr title="HyperText Markup Language">HTML</abbr>
+        abbreviation, and a <time datetime="2026-10-10">formatted date</time>.
+      </p>
+
+      <blockquote>
+        Good design is as little design as possible.
+        <footer>— A design principle</footer>
+      </blockquote>
+
+      <pre><code>const greeting = "Hello, CSS!";
+console.log(greeting);</code></pre>
+
+      <p>Inline code example: <code>display: flex;</code></p>
+
+      <hr>
+
+      <h3>Lists</h3>
+      <ul>
+        <li>Unordered list item</li>
+        <li>Another item
+          <ul>
+            <li>Nested list item</li>
+          </ul>
+        </li>
+        <li>Third item</li>
+      </ul>
+
+      <ol>
+        <li>First ordered item</li>
+        <li>Second ordered item</li>
+        <li>Third ordered item</li>
+      </ol>
+
+      <dl>
+        <dt>Design token</dt>
+        <dd>A reusable value such as a color or spacing unit.</dd>
+        <dt>Component</dt>
+        <dd>A reusable interface building block.</dd>
+      </dl>
+    </section>
+
+    <hr>
+
+    <!-- BUTTONS -->
+    <section id="buttons">
+      <h2>Buttons and Links</h2>
+
+      <p>
+        <button type="button">Default button</button>
+        <button type="button" disabled>Disabled button</button>
+        <button type="submit">Submit button</button>
+        <button type="reset">Reset button</button>
+      </p>
+
+      <p>
+        <button type="button" class="neutral">Neutral</button>
+        <button type="button" class="reverse">Reverse</button>
+        <button type="button" class="flat">Flat</button>
+        <button type="button" class="success">Success</button>
+        <button type="button" class="danger">Danger</button>
+        <a href="#buttons" role="button">Link as button</a>
+      </p>
+
+      <p>
+        <a href="#buttons">Standard link</a>
+        <a href="#buttons" aria-current="page">Current link</a>
+      </p>
+
+      <p>
+        <input type="button" value="Input button">
+        <input type="submit" value="Input submit">
+        <input type="reset" value="Input reset">
+      </p>
+    </section>
+
+    <hr>
+
+    <!-- FORMS -->
+    <section id="forms">
+      <h2>Form Elements</h2>
+
+      <form action="#" method="get">
+        <fieldset>
+          <legend>Personal information</legend>
+
+          <p>
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text"
+                   placeholder="Jane Doe">
+          </p>
+
+          <p>
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email"
+                   placeholder="jane@example.com" required>
+          </p>
+
+          <p>
+            <label for="password">Password</label>
+            <input id="password" name="password"
+                   type="password" placeholder="Enter password">
+          </p>
+
+          <p>
+            <label for="search">Search</label>
+            <input id="search" name="search" type="search"
+                   placeholder="Search...">
+          </p>
+
+          <p>
+            <label for="website">Website</label>
+            <input id="website" name="website" type="url"
+                   placeholder="https://example.com">
+          </p>
+
+          <p>
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel"
+                   placeholder="+352 000 000">
+          </p>
+
+          <p>
+            <label for="number">Quantity</label>
+            <input id="number" name="number" type="number"
+                   min="0" max="100" value="5">
+          </p>
+
+          <p>
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date">
+          </p>
+
+          <p>
+            <label for="time">Time</label>
+            <input id="time" name="time" type="time">
+          </p>
+
+          <p>
+            <label for="color">Color picker</label>
+            <input id="color" name="color" type="color"
+                   value="#3366ff">
+          </p>
+
+          <p>
+            <label for="range">Range slider</label>
+            <input id="range" name="range" type="range"
+                   min="0" max="100" value="60">
+          </p>
+
+          <p>
+            <label for="country">Country</label>
+            <select id="country" name="country">
+              <option value="">Choose a country</option>
+              <option value="lu">Luxembourg</option>
+              <option value="fr">France</option>
+              <option value="de">Germany</option>
+              <option value="be">Belgium</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="message">Message</label>
+            <textarea id="message" name="message"
+                      rows="4" placeholder="Write something..."></textarea>
+          </p>
+
+          <p>
+            <label for="file">Upload file</label>
+            <input id="file" name="file" type="file">
+          </p>
+
+          <p>
+            <label>
+              <input type="checkbox" name="newsletter">
+              Subscribe to the newsletter
+            </label>
+          </p>
+
+          <p>
+            <label>
+              <input type="checkbox" role="switch" name="notifications" checked>
+              Enable notifications
+            </label>
+          </p>
+
+          <fieldset>
+            <legend>Preferred contact method</legend>
+            <label>
+              <input type="radio" name="contact" value="email" checked>
+              Email
+            </label>
+            <label>
+              <input type="radio" name="contact" value="phone">
+              Phone
+            </label>
+            <label>
+              <input type="radio" name="contact" value="mail">
+              Postal mail
+            </label>
+          </fieldset>
+
+          <p>
+            <label for="disabled-input">Disabled input</label>
+            <input id="disabled-input" type="text"
+                   value="Not editable" disabled>
+          </p>
+
+          <p>
+            <label for="readonly-input">Read-only input</label>
+            <input id="readonly-input" type="text"
+                   value="Read-only value" readonly>
+          </p>
+
+          <p>
+            <label for="datalist-input">Autocomplete</label>
+            <input id="datalist-input" name="framework"
+                   list="frameworks" placeholder="Choose a framework">
+            <datalist id="frameworks">
+              <option value="React">
+              <option value="Vue">
+              <option value="Angular">
+              <option value="Svelte">
+            </datalist>
+          </p>
+
+          <p>
+            <button type="submit">Save changes</button>
+            <button type="reset">Clear form</button>
+          </p>
+        </fieldset>
+      </form>
+    </section>
+
+    <hr>
+
+    <!-- TABLES -->
+    <section id="tables">
+      <h2>Tables</h2>
+
+      <table>
+        <caption>Team members</caption>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alex Morgan</td>
+            <td>Designer</td>
+            <td>Active</td>
+            <td>95</td>
+          </tr>
+          <tr>
+            <td>Jamie Lee</td>
+            <td>Developer</td>
+            <td>Pending</td>
+            <td>82</td>
+          </tr>
+          <tr>
+            <td>Sam Taylor</td>
+            <td>Manager</td>
+            <td>Inactive</td>
+            <td>76</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row" colspan="3">Average score</th>
+            <td>84.3</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <hr>
+
+    <!-- UI COMPONENTS -->
+    <section id="components">
+      <h2>UI Components</h2>
+
+      <h3>Cards</h3>
+      <div class="card-grid">
+        <article class="card">
+          <header>
+            <p>DESIGN</p>
+            <h3>Card title</h3>
+          </header>
+          <p>A simple card with a title, content, and footer.</p>
+          <footer>
+            <a href="#components">Read more</a>
+          </footer>
+        </article>
+
+        <article class="card">
+          <header>
+            <p>DEVELOPMENT</p>
+            <h3>Another card</h3>
+          </header>
+          <p>Test borders, padding, shadows, and content spacing.</p>
+          <footer>
+            <button type="button">View details</button>
+          </footer>
+        </article>
+
+        <article class="card">
+          <header>
+            <p>PRODUCT</p>
+            <h3>Third card</h3>
+          </header>
+          <p>Check how your library handles different content lengths.</p>
+          <footer>
+            <a href="#components">Explore</a>
+          </footer>
+        </article>
+      </div>
+
+      <h3>Badges and Labels</h3>
+      <p>
+        <span class="badge">Default</span>
+        <span class="badge badge-success">Success</span>
+        <span class="badge badge-warning">Warning</span>
+        <span class="badge badge-danger">Error</span>
+        <span class="badge badge-info">Information</span>
+      </p>
+
+      <h3>Alerts</h3>
+      <div class="alert" role="status">
+        <strong>Default:</strong> This is a standard notification.
+      </div>
+      <div class="alert alert-success" role="status">
+        <strong>Success:</strong> Your changes have been saved.
+      </div>
+      <div class="alert alert-warning" role="status">
+        <strong>Warning:</strong> Please review the information.
+      </div>
+      <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> Something went wrong.
+      </div>
+      <div class="alert alert-info" role="status">
+        <strong>Info:</strong> Here is some helpful information.
+      </div>
+
+      <h3>Progress and Meter</h3>
+      <label for="progress">Project completion</label>
+      <progress id="progress" value="70" max="100">70%</progress>
+
+      <label for="loading">Loading (indeterminate)</label>
+      <progress id="loading" aria-label="Loading">Loading…</progress>
+
+      <label for="meter">System capacity</label>
+      <meter id="meter" min="0" max="100"
+             low="30" high="80" optimum="60" value="65">65%</meter>
+
+      <h3>Disclosure</h3>
+      <details>
+        <summary>What is a CSS library?</summary>
+        <p>
+          A collection of reusable styles, design tokens,
+          components, and layout utilities.
+        </p>
+      </details>
+
+      <details open>
+        <summary>Expanded disclosure</summary>
+        <p>This disclosure is open by default.</p>
+      </details>
+
+      <h3>Figures and Images</h3>
+      <figure>
+        <img
+          src="https://placehold.co/800x300"
+          alt="Placeholder landscape"
+          width="800"
+          height="300">
+        <figcaption>
+          Figure caption: test image sizing, borders, and captions.
+        </figcaption>
+      </figure>
+
+      <h3>Embedded Content</h3>
+      <iframe
+        title="Example embedded document"
+        srcdoc="<p>Embedded content preview.</p>"
+        width="100%"
+        height="100">
+      </iframe>
+    </section>
+
+    <hr>
+
+    <!-- LAYOUT TESTS -->
+    <section id="layouts">
+      <h2>Layout and Spacing</h2>
+
+      <div class="grid">
+        <div class="card">Column one</div>
+        <div class="card">Column two</div>
+        <div class="card">Column three</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">A short item</div>
+        <div class="card">
+          A longer content item to test wrapping, alignment,
+          and how your layout responds to different content lengths.
+        </div>
+      </div>
+
+      <aside>
+        <h3>Aside content</h3>
+        <p>Supplementary information or a sidebar block.</p>
+      </aside>
+    </section>
+
+    <hr>
+
+    <!-- SEMANTIC ELEMENTS -->
+    <section id="miscellaneous">
+      <h2>Miscellaneous Elements</h2>
+
+      <address>
+        Contact information:<br>
+        Neoless CSS Team<br>
+        123 Design Street<br>
+        Luxembourg
+      </address>
+
+      <p>
+        <del>Old price: €120</del>
+        <ins>New price: €95</ins>
+      </p>
+
+      <p>
+        Keyboard input: <kbd>Ctrl</kbd> + <kbd>S</kbd>
+      </p>
+
+      <p>
+        Sample output: <samp>Build completed successfully.</samp>
+      </p>
+
+      <p>
+        Chemical formula: H<sub>2</sub>O.
+        Mathematical expression: x<sup>2</sup>.
+      </p>
+
+      <p>
+        Long unbroken text:
+        <span>SuperLongUnbrokenTextForTestingOverflowAndWordWrapping123456789</span>
+      </p>
+
+      <hr>
+
+      <p>
+        <a href="#top">Back to top</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Neoless CSS.</p>
+    <nav aria-label="Footer navigation">
+      <a href="#typography">Typography</a>
+      <a href="#forms">Forms</a>
+      <a href="#components">Components</a>
+    </nav>
+  </footer>
+
+  <script>
+    // Playground only: cycle light / dark theme
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+      const root = document.documentElement;
+      const dark = root.dataset.theme
+        ? root.dataset.theme === "dark"
+        : matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.theme = dark ? "light" : "dark";
+    });
+  </script>
+</body>
+</html>

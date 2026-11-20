@@ -1,0 +1,36 @@
+{
+  "name": "neoless-css",
+  "displayName": "Neoless CSS",
+  "version": "0.1.0",
+  "description": "Neoless CSS — a classless / class-light CSS library in the Neo Brutalism style.",
+  "private": true,
+  "type": "module",
+  "style": "dist/neoless.css",
+  "exports": {
+    ".": "./dist/neoless.css",
+    "./min": "./dist/neoless.min.css",
+    "./src/*": "./css/*"
+  },
+  "files": [
+    "dist",
+    "css"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node --watch-path=css scripts/build.mjs"
+  },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 121",
+    "safari >= 16.4",
+    "ios_saf >= 16.4"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "browserslist": "4.29.4",
+    "lightningcss": "1.33.0"
+  }
+}

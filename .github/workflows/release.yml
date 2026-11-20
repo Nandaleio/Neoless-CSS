@@ -1,0 +1,45 @@
+name: Release
+
+# Runs when a version tag is pushed, e.g. `npm version minor && git push --follow-tags`
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Check tag matches package.json version
+        run: |
+          pkg="v$(node -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $pkg"
+            exit 1
+          fi
+
+      - run: npm run build
+
+      - name: Package
+        run: |
+          mkdir -p release
+          cp dist/neoless.css dist/neoless.min.css release/
+          zip -r "release/neoless-css-${GITHUB_REF_NAME}.zip" dist css README.md
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release/* \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes \
+            --verify-tag

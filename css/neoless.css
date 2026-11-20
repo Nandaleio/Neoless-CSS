@@ -1,0 +1,1224 @@
+/* ==========================================================================
+   Neoless CSS — a classless / class-light Neo Brutalism stylesheet
+   Load order: reset.css → tokens.css → neoless.css (see index.css)
+
+   Element styles use :where() so they have zero specificity and are easy
+   to override. The few classes (.card, .badge, .alert, .grid + modifiers)
+   cover patterns HTML has no element for.
+   ========================================================================== */
+
+
+/* 1. Base
+   ========================================================================== */
+
+:where(html) {
+  font-size: var(--font-size-base);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+:where(body) {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-base);
+  line-height: var(--line-height-base);
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+}
+
+:focus-visible {
+  outline: var(--border-width) solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/* 2. Page layout: body > header / main / footer
+   ========================================================================== */
+
+:where(body > header, body > main, body > footer) {
+  width: 100%;
+}
+
+:where(body > main) {
+  flex: 1;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding: var(--space-6) var(--container-padding) var(--space-8);
+}
+
+:where(body > header) {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--color-bg-secondary);
+  border-bottom: var(--border);
+}
+
+@media (max-width: 40rem) {
+  :where(body > header) {
+    position: static;
+  }
+}
+
+:where(body > footer) {
+  background-color: var(--color-bg-secondary);
+  border-top: var(--border);
+}
+
+:where(body > header, body > footer) > * {
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding: var(--space-3) var(--container-padding);
+}
+
+:where(body > footer) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) max(var(--container-padding), (100% - var(--container-width)) / 2 + var(--container-padding));
+}
+
+:where(body > footer) > * {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+
+/* 3. Vertical rhythm
+   ========================================================================== */
+
+:where(p, ul, ol, dl, blockquote, pre, table, figure, form, fieldset, details,
+       address, progress, meter, iframe, aside, .grid, .card-grid, .alert) {
+  margin-block: 0 var(--flow-space);
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  margin-block: var(--space-6) var(--space-3);
+}
+
+:where(h1, h2, h3, h4, h5, h6):first-child,
+:where(section) > :where(h1, h2, h3, h4, h5, h6):first-child {
+  margin-top: 0;
+}
+
+/* No trailing margin inside boxed components */
+:where(.card, .alert, aside, fieldset, details, blockquote, main > header, section, li, dd, td, th) > :where(:last-child) {
+  margin-bottom: 0;
+}
+
+:where(section) {
+  scroll-margin-top: 5rem;
+}
+
+
+/* 4. Typography
+   ========================================================================== */
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
+  text-wrap: balance;
+}
+
+:where(h1) { font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem); letter-spacing: -0.02em; }
+:where(h2) { font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem); letter-spacing: -0.01em; }
+:where(h3) { font-size: 1.5rem; }
+:where(h4) { font-size: 1.25rem; }
+:where(h5) { font-size: 1.125rem; }
+:where(h6) { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+:where(p) {
+  text-wrap: pretty;
+}
+
+:where(b, strong) { font-weight: var(--font-weight-heading); }
+:where(small) { font-size: 0.875em; }
+
+:where(a) {
+  color: inherit;
+  font-weight: var(--font-weight-heading);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-width);
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-main);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+:where(a):hover {
+  text-decoration-color: currentColor;
+}
+
+:where(mark) {
+  background-color: var(--color-mark);
+  color: var(--color-main-fg);
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+
+:where(abbr[title]) {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+:where(del) {
+  background-color: color-mix(in oklch, var(--color-danger) 35%, transparent);
+  text-decoration-thickness: var(--border-width);
+}
+
+:where(ins) {
+  background-color: color-mix(in oklch, var(--color-success) 40%, transparent);
+  text-decoration: none;
+}
+
+:where(sub, sup) {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+:where(sup) { top: -0.5em; }
+:where(sub) { bottom: -0.25em; }
+
+:where(address) {
+  font-style: normal;
+}
+
+:where(hr) {
+  height: var(--border-width);
+  margin: var(--space-7) 0;
+  border: 0;
+  background-color: var(--color-border);
+}
+
+
+/* 5. Lists
+   ========================================================================== */
+
+:where(ul, ol) {
+  padding-inline-start: var(--space-5);
+}
+
+:where(ul) { list-style-type: square; }
+
+:where(li) + :where(li) { margin-top: var(--space-1); }
+
+:where(li) > :where(ul, ol) {
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+}
+
+:where(ul, ol) ::marker {
+  font-weight: var(--font-weight-heading);
+}
+
+:where(dt) {
+  font-weight: var(--font-weight-heading);
+}
+
+:where(dd) {
+  margin: 0 0 var(--space-3);
+  padding-inline-start: var(--space-3);
+  border-inline-start: calc(var(--border-width) * 2) solid var(--color-main);
+}
+
+
+/* 6. Navigation
+   ========================================================================== */
+
+:where(nav) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+:where(nav li) {
+  margin: 0;
+}
+
+:where(nav ul, nav ol) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(nav) :where(a:not([role="button"])) {
+  padding: var(--space-1) var(--space-2);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-base);
+  text-decoration: none;
+  font-weight: var(--font-weight-heading);
+}
+
+:where(nav) :where(a:not([role="button"])):hover,
+:where(nav) :where(a[aria-current]:not([aria-current="false"])) {
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  border-color: var(--color-border);
+}
+
+/* The first link of a header nav is the brand */
+:where(body > header nav) > :where(a:first-child) {
+  margin-inline-end: auto;
+  padding-inline: 0;
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+}
+
+:where(body > header nav) > :where(a:first-child):hover {
+  background: none;
+  border-color: transparent;
+  color: inherit;
+}
+
+
+
+/* 7. Quotes & code
+   ========================================================================== */
+
+:where(blockquote) {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-inline-start-width: calc(var(--border-width) * 5);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-heading);
+}
+
+:where(blockquote) :where(footer, cite) {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-family-base);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-base);
+  font-style: normal;
+}
+
+:where(code, kbd, samp, pre) {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+}
+
+:where(code, samp) {
+  padding: 0.1em 0.35em;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+}
+
+:where(kbd) {
+  display: inline-block;
+  padding: 0.1em 0.45em;
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+  font-weight: var(--font-weight-heading);
+  line-height: 1.3;
+}
+
+:where(pre) {
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+  background-color: var(--color-code-bg);
+  color: var(--color-code-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+:where(pre) :where(code) {
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+
+/* 8. Buttons
+   Default: main colour, no shadow; lifts and darkens on hover, presses on
+   click. Motion and shadow come from the --button-* tokens in tokens.css.
+   Modifiers: .neutral  .reverse  .flat  + status colours (see section 16)
+   ========================================================================== */
+
+:where(button,
+       input:is([type="button"], [type="submit"], [type="reset"]),
+       a[role="button"],
+       .button,
+       main > header p > a) {
+  --_bg: var(--color-main);
+  --_fg: var(--color-main-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-button);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-base);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: transform var(--transition), box-shadow var(--transition),
+              background-color var(--transition);
+}
+
+:where(button,
+       input:is([type="button"], [type="submit"], [type="reset"]),
+       a[role="button"],
+       .button,
+       main > header p > a):where(:hover, :focus-visible):not(:disabled, [aria-disabled="true"]) {
+  background-color: color-mix(in oklch, var(--_bg), black var(--button-hover-darken));
+  transform: var(--button-hover-transform);
+  box-shadow: var(--shadow-button-hover);
+}
+
+:where(button,
+       input:is([type="button"], [type="submit"], [type="reset"]),
+       a[role="button"],
+       .button,
+       main > header p > a):active:not(:disabled, [aria-disabled="true"]) {
+  background-color: color-mix(in oklch, var(--_bg), black var(--button-hover-darken));
+  transform: var(--button-active-transform);
+  box-shadow: none;
+  transition-duration: 50ms;
+}
+
+/* Secondary actions */
+:where(input[type="reset"], button[type="reset"], main > header p > a),
+:where(button, input, a, .button).neutral {
+  --_bg: var(--color-bg-secondary);
+  --_fg: var(--color-fg);
+}
+
+/* Reverse: sinks on hover instead of lifting */
+:where(button, input, a, .button).reverse:where(:hover, :focus-visible):not(:disabled) {
+  transform: translateY(2px);
+}
+:where(button, input, a, .button).reverse:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+/* Flat: no shadow, no movement (colour still changes on hover) */
+:where(button, input, a, .button).flat,
+:where(button, input, a, .button).flat:is(:hover, :focus-visible, :active) {
+  box-shadow: none;
+  transform: none;
+}
+
+:where(button, input, a[role="button"], .button):where(:disabled, [aria-disabled="true"]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* 9. Form controls
+   ========================================================================== */
+
+:where(label) {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-family-heading);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-heading);
+}
+
+/* Label wrapping a checkbox / radio */
+:where(label:has(> input:is([type="checkbox"], [type="radio"]))) {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: fit-content;
+  font-family: var(--font-family-base);
+  font-size: 1rem;
+  font-weight: var(--font-weight-base);
+  cursor: pointer;
+}
+
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"],
+                 [type="button"], [type="submit"], [type="reset"], [type="image"], [type="hidden"]),
+       select,
+       textarea) {
+  display: block;
+  width: 100%;
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: var(--font-weight-base);
+  line-height: 1.4;
+}
+
+:where(input, select, textarea):focus-visible {
+  outline: var(--border-width) solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+::placeholder {
+  color: color-mix(in oklch, var(--color-fg) 50%, transparent);
+  opacity: 1;
+}
+
+:where(textarea) {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+:where(input, select, textarea):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:where(input, textarea)[readonly] {
+  background-color: var(--color-bg);
+  border-style: dashed;
+}
+
+:where(input, select, textarea):user-invalid,
+:where(input, select, textarea)[aria-invalid="true"] {
+  background-color: color-mix(in oklch, var(--color-danger) 25%, var(--color-bg-secondary));
+}
+
+/* Select: custom chevron that follows currentColor */
+:where(select:not([multiple], [size])) {
+  appearance: none;
+  padding-inline-end: var(--space-7);
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.25rem) 55%,
+    calc(100% - 0.85rem) 55%;
+  background-size: 0.4rem 0.4rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* Kill native search / number chrome where it clashes */
+:where(input[type="search"])::-webkit-search-decoration { appearance: none; }
+
+:where(input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]))::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* File input */
+:where(input[type="file"]) {
+  padding: var(--space-1);
+  cursor: pointer;
+}
+
+:where(input[type="file"])::file-selector-button {
+  margin-inline-end: var(--space-3);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  font: inherit;
+  font-weight: var(--font-weight-heading);
+  cursor: pointer;
+}
+
+/* Checkbox & radio */
+:where(input:is([type="checkbox"], [type="radio"])) {
+  appearance: none;
+  flex-shrink: 0;
+  display: inline-grid;
+  place-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+:where(input[type="radio"]) {
+  border-radius: 50%;
+}
+
+:where(input:is([type="checkbox"], [type="radio"]))::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: var(--color-main-fg);
+  transform: scale(0);
+  transition: transform var(--transition);
+}
+
+:where(input[type="checkbox"])::before {
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+:where(input[type="radio"])::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+:where(input:is([type="checkbox"], [type="radio"])):is(:checked, :indeterminate) {
+  background-color: var(--color-main);
+}
+
+:where(input:is([type="checkbox"], [type="radio"])):checked::before {
+  transform: scale(1);
+}
+
+:where(input[type="checkbox"]):indeterminate::before {
+  height: var(--border-width);
+  clip-path: none;
+  transform: scale(1);
+}
+
+/* Switch: <input type="checkbox" role="switch"> */
+:where(input[type="checkbox"][role="switch"]) {
+  width: 2.75rem;
+  height: 1.5rem;
+  padding: 0 0.125rem;
+  place-content: center start;
+  border-radius: 999px;
+}
+
+:where(input[type="checkbox"][role="switch"])::before {
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: 50%;
+  clip-path: none;
+  transform: none;
+}
+
+:where(input[type="checkbox"][role="switch"]):checked::before {
+  transform: translateX(1.25rem);
+  background-color: #fff;
+}
+
+/* Colour picker */
+:where(input[type="color"]) {
+  appearance: none;
+  width: 4rem;
+  height: var(--control-height);
+  padding: 0.2rem;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+}
+:where(input[type="color"])::-webkit-color-swatch-wrapper { padding: 0; }
+:where(input[type="color"])::-webkit-color-swatch {
+  border: var(--border);
+  border-radius: 2px;
+}
+:where(input[type="color"])::-moz-color-swatch {
+  border: var(--border);
+  border-radius: 2px;
+}
+
+/* Range */
+:where(input[type="range"]) {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+:where(input[type="range"])::-webkit-slider-runnable-track {
+  height: 0.75rem;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+}
+:where(input[type="range"])::-moz-range-track {
+  height: 0.75rem;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+}
+:where(input[type="range"])::-moz-range-progress {
+  height: 0.75rem;
+  background-color: var(--color-main);
+  border: var(--border);
+  border-radius: var(--radius-base);
+}
+
+:where(input[type="range"])::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: calc((0.75rem - 2 * var(--border-width) - 1.25rem) / 2);
+  background-color: var(--color-main);
+  border: var(--border);
+  border-radius: 50%;
+}
+:where(input[type="range"])::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  box-sizing: border-box;
+  background-color: var(--color-main);
+  border: var(--border);
+  border-radius: 50%;
+}
+
+:where(input[type="range"]):focus-visible {
+  outline: none;
+}
+:where(input[type="range"]):focus-visible::-webkit-slider-thumb {
+  outline: var(--border-width) solid var(--color-ring);
+  outline-offset: 2px;
+}
+:where(input[type="range"]):focus-visible::-moz-range-thumb {
+  outline: var(--border-width) solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Fieldset */
+:where(fieldset) {
+  min-width: 0;
+  padding: var(--space-5);
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+:where(fieldset fieldset) {
+  padding: var(--space-4);
+  background-color: var(--color-bg);
+  box-shadow: none;
+}
+
+:where(legend) {
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+}
+
+/* A paragraph that holds buttons lays them out in a row */
+:where(p, footer, div):has(> :is(button, input[type="button"], input[type="submit"],
+                                  input[type="reset"], a[role="button"], .button)),
+:where(main > header p:has(> a)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+
+/* 10. Tables
+   ========================================================================== */
+
+:where(table) {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(caption) {
+  padding-bottom: var(--space-2);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  text-align: start;
+}
+
+:where(th, td) {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+:where(thead th) {
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+}
+
+:where(thead tr:first-child th:first-child) { border-start-start-radius: calc(var(--radius-base) - var(--border-width)); }
+:where(thead tr:first-child th:last-child)  { border-start-end-radius: calc(var(--radius-base) - var(--border-width)); }
+
+:where(tbody tr) {
+  transition: background-color var(--transition);
+}
+
+:where(tbody tr):hover {
+  background-color: color-mix(in oklch, var(--color-main) 25%, var(--color-bg-secondary));
+}
+
+:where(tfoot) :where(th, td) {
+  background-color: var(--color-bg);
+  font-weight: var(--font-weight-heading);
+}
+
+:where(table) > :last-child > tr:last-child > * {
+  border-bottom: 0;
+}
+
+
+/* 11. Disclosure (details / summary) — accordion
+   ========================================================================== */
+
+:where(details) {
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+:where(summary) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-heading);
+  list-style: none;
+  cursor: pointer;
+}
+
+:where(summary)::-webkit-details-marker { display: none; }
+
+:where(summary)::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform var(--transition);
+}
+
+:where(details[open]) > :where(summary) {
+  border-bottom: var(--border);
+}
+
+:where(details[open]) > :where(summary)::after {
+  transform: rotate(45deg);
+}
+
+:where(details) > :where(:not(summary)) {
+  margin: var(--space-4);
+}
+
+/* Open / close animation.
+   ::details-content + interpolate-size animate the height to/from auto
+   (Chromium today); browsers without interpolate-size still get the fade,
+   and browsers without ::details-content simply open instantly. */
+@supports selector(::details-content) {
+  :where(details) {
+    interpolate-size: allow-keywords;
+  }
+
+  :where(details)::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    border-top: 0 solid var(--color-border);
+    transition:
+      block-size var(--transition-slow),
+      opacity var(--transition-slow),
+      border-top-width var(--transition-slow),
+      content-visibility var(--transition-slow) allow-discrete;
+  }
+
+  :where(details[open])::details-content {
+    block-size: auto;
+    opacity: 1;
+    border-top-width: var(--border-width);
+  }
+
+  /* The separator lives on the content so it collapses with it */
+  :where(details[open]) > :where(summary) {
+    border-bottom: 0;
+  }
+}
+
+:where(summary)::after {
+  transition: transform var(--transition-slow);
+}
+
+:where(summary):hover::after {
+  transform: scale(1.2);
+}
+
+:where(details[open]) > :where(summary):hover::after {
+  transform: rotate(45deg) scale(1.2);
+}
+
+
+/* 12. Progress & meter
+   ========================================================================== */
+
+:where(progress, meter) {
+  display: block;
+  width: 100%;
+  height: 1.25rem;
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+}
+
+:where(progress, meter) {
+  appearance: none;
+}
+
+:where(progress)::-webkit-progress-bar {
+  background-color: var(--color-bg-secondary);
+}
+:where(progress)::-webkit-progress-value {
+  background-color: var(--color-main);
+  border-inline-end: var(--border);
+}
+:where(progress)::-moz-progress-bar {
+  background-color: var(--color-main);
+  border-inline-end: var(--border);
+}
+
+/* Indeterminate: <progress> with no value — a bordered block slides across */
+:where(progress:indeterminate) {
+  background-color: var(--color-bg-secondary);
+  background-image: linear-gradient(to right,
+    var(--color-border) 0 var(--border-width),
+    var(--color-main) var(--border-width) calc(100% - var(--border-width)),
+    var(--color-border) calc(100% - var(--border-width)));
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  animation: neoless-progress-slide 1.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+:where(progress:indeterminate)::-webkit-progress-bar {
+  background: transparent;
+}
+
+:where(progress:indeterminate)::-webkit-progress-value {
+  display: none;
+}
+
+:where(progress:indeterminate)::-moz-progress-bar {
+  background: transparent;
+  border: 0;
+}
+
+@keyframes neoless-progress-slide {
+  from { background-position: -66.67% 0; }  /* block just off the left edge  */
+  to   { background-position: 166.67% 0; }  /* block just off the right edge */
+}
+
+/* Reduced motion: static diagonal stripes instead of movement */
+@media (prefers-reduced-motion: reduce) {
+  :where(progress:indeterminate) {
+    animation: none;
+    background-image: repeating-linear-gradient(-45deg,
+      var(--color-main) 0 0.5rem,
+      var(--color-bg-secondary) 0.5rem 1rem);
+    background-size: auto;
+  }
+}
+
+:where(meter)::-webkit-meter-inner-element {
+  display: -webkit-box;
+  height: 100%;
+}
+:where(meter)::-webkit-meter-bar {
+  height: 100%;
+  background: var(--color-bg-secondary);
+  border: 0;
+  border-radius: 0;
+}
+:where(meter)::-webkit-meter-optimum-value,
+:where(meter)::-webkit-meter-suboptimum-value,
+:where(meter)::-webkit-meter-even-less-good-value { height: 100%; box-sizing: border-box; }
+:where(meter)::-webkit-meter-optimum-value       { background: var(--color-success); border-inline-end: var(--border); }
+:where(meter)::-webkit-meter-suboptimum-value    { background: var(--color-warning); border-inline-end: var(--border); }
+:where(meter)::-webkit-meter-even-less-good-value { background: var(--color-danger);  border-inline-end: var(--border); }
+
+@supports (-moz-appearance: none) {
+  :where(meter)::-moz-meter-bar { background: var(--color-success); border-inline-end: var(--border); }
+  :where(meter:-moz-meter-sub-optimum)::-moz-meter-bar { background: var(--color-warning); }
+  :where(meter:-moz-meter-sub-sub-optimum)::-moz-meter-bar { background: var(--color-danger); }
+}
+
+/* Label directly above a bar */
+:where(label):has(+ :is(progress, meter)) {
+  margin-bottom: var(--space-2);
+}
+
+
+/* 13. Media
+   ========================================================================== */
+
+:where(img, video, canvas, svg, picture) {
+  max-width: 100%;
+  height: auto;
+}
+
+:where(figure) {
+  margin-inline: 0;
+}
+
+:where(figure) > :where(img, video, picture, canvas) {
+  display: block;
+  width: 100%;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+:where(figcaption) {
+  margin-top: var(--space-3);
+  font-size: 0.875rem;
+}
+
+:where(iframe) {
+  display: block;
+  width: 100%;
+  background-color: var(--color-bg-secondary);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+
+/* 14. Sections: hero, aside
+   ========================================================================== */
+
+/* main > header is the page hero */
+:where(main > header) {
+  margin-bottom: var(--space-7);
+  padding: var(--space-7) var(--space-6);
+  background-color: var(--color-main);
+  color: var(--color-main-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+:where(main > header) > :where(h1) {
+  margin: 0 0 var(--space-4);
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 4.5rem);
+}
+
+:where(main > header) > :where(p) {
+  max-width: 40rem;
+  font-size: 1.125rem;
+}
+
+:where(main > header) > :where(p:first-child) {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-heading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where(aside) {
+  padding: var(--space-5);
+  background-color: var(--color-warning);
+  color: var(--color-main-fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+:where(aside) > :where(h1, h2, h3, h4, h5, h6) {
+  margin-top: 0;
+}
+
+
+/* 15. Components (class-light)
+   ========================================================================== */
+
+/* Grid: <div class="grid"> — responsive auto-fit columns */
+.grid,
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: var(--space-5);
+}
+
+/* Card: <article class="card"> with optional header / footer */
+.card {
+  --_bg: var(--color-bg-secondary);
+  --_fg: var(--color-fg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+.card > * {
+  margin: 0;
+}
+
+.card > header > * {
+  margin: 0;
+}
+
+.card > header > p:first-child {
+  margin-bottom: var(--space-1);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-heading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.card > footer {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: var(--border);
+}
+
+/* Linked / interactive card: <a class="card"> */
+a.card {
+  text-decoration: none;
+  transition: background-color var(--transition);
+}
+a.card:hover {
+  --_bg: color-mix(in oklch, var(--color-main) 25%, var(--color-bg-secondary));
+}
+
+/* Badge: <span class="badge"> */
+.badge {
+  --_bg: var(--color-main);
+  --_fg: var(--color-main-fg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.125rem 0.625rem;
+  background-color: var(--_bg);
+  color: var(--_fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-base);
+  line-height: 1.4;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Alert: <div class="alert" role="status"> */
+.alert {
+  --_bg: var(--color-main);
+  --_fg: var(--color-main-fg);
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  border: var(--border);
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-surface);
+}
+
+.alert > :where(strong:first-child) {
+  margin-inline-end: var(--space-1);
+}
+
+
+/* 16. Colour modifiers — work on buttons, cards, badges and alerts
+   ========================================================================== */
+
+.neutral, .badge-neutral, .alert-neutral { --_bg: var(--color-bg-secondary); --_fg: var(--color-fg); }
+.main,    .badge-main,    .alert-main    { --_bg: var(--color-main);    --_fg: var(--color-main-fg); }
+.success, .badge-success, .alert-success { --_bg: var(--color-success); --_fg: var(--color-main-fg); }
+.warning, .badge-warning, .alert-warning { --_bg: var(--color-warning); --_fg: var(--color-main-fg); }
+.danger,  .badge-danger,  .alert-danger  { --_bg: var(--color-danger);  --_fg: var(--color-main-fg); }
+.info,    .badge-info,    .alert-info    { --_bg: var(--color-info);    --_fg: var(--color-main-fg); }
+
+
+/* 17. Utilities
+   ========================================================================== */
+
+/* Shadow on / off for a single element (beats the defaults above) */
+.shadow { box-shadow: var(--shadow) !important; }
+.flat   { box-shadow: none !important; }
+
+/* Graph-paper page background, as on neobrutalism.dev: <body class="bg-grid"> */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--color-fg) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--color-fg) 10%, transparent) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
